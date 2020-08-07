@@ -1,0 +1,8 @@
+---
+
+- hosts: all
+  name: Install both Java 8 and 11 and force Java 8 as default
+  become: true
+  become_method: sudo
+  tasks:
+    - include_tasks: ../main-server/java.yml
