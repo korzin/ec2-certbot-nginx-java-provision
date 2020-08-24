@@ -4,7 +4,7 @@
   become: true
   become_method: sudo
   vars:
-    config_filename: nginx-first-take.cfg
+    nginx_app_name: nginx-1-take
   tasks:
     - import_tasks: ../main-server/common-apt/curl.yml
     - import_tasks: ../main-server/java/java.yml
