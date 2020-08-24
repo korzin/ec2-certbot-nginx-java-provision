@@ -1,0 +1,26 @@
+- name: ensure nginx version
+  apt: name=nginx state=latest
+  become: yes
+- name: start nginx
+  service:
+    name: nginx
+    state: started
+  become: yes
+- name: set nginx config
+  copy:
+    src: "{{ config_filename }}"
+    dest: "/etc/nginx/sites-available/{{ config_filename }}"
+  become: yes
+  notify: "restart nginx"
+- name: set config as default with symlink
+  file:
+    src: "/etc/nginx/sites-available/{{ config_filename }}"
+    dest: /etc/nginx/sites-enabled/default
+    state: link
+  become: yes
+- name: copy the content of the web site
+  copy:
+    src: static/
+    dest: /var/www/nginx-first-take
+    mode: u+rw,g+rw,o+r
+  notify: "restart nginx"

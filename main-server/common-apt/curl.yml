@@ -1,0 +1,5 @@
+- name: apt curl
+  apt:
+    force_apt_get: true
+    name: curl
+    update_cache: yes

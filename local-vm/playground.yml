@@ -1,8 +1,14 @@
 ---
-
 - hosts: all
   name: Install both Java 8 and 11 and force Java 8 as default
   become: true
   become_method: sudo
+  vars:
+    config_filename: nginx-first-take.cfg
   tasks:
-    - include_tasks: ../main-server/java.yml
+    - import_tasks: ../main-server/common-apt/curl.yml
+    - import_tasks: ../main-server/java/java.yml
+    - import_tasks: ../main-server/nginx/nginx.yml
+  handlers:
+    - import_tasks: ../main-server/handlers/nginx-restart.yml
+
