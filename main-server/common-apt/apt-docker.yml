@@ -1,0 +1,28 @@
+- name: install aptititude with apt
+  apt:
+    force_apt_get: yes
+    name: aptitude
+    state: latest
+    update_cache: yes
+- name: pip urllib3 lib
+  pip:
+    name: urllib3
+    executable: pip3
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+- name: add apt repo
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+    update_cache: yes
+- name: Update apt and install docker-ce
+  apt:
+    update_cache: yes
+    name: docker-ce
+    state: latest
+- name: pip docker lib
+  pip:
+    name: docker
+    executable: pip3
