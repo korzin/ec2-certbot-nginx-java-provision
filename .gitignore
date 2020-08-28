@@ -2,3 +2,6 @@
 *.iml
 /scratch-dir
 /secrets
+
+hosts-dev
+main-platbook-dev.yml
