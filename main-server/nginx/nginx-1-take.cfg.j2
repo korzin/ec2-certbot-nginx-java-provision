@@ -1,6 +1,5 @@
 server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
+
     root /var/www/{{ nginx_app_name }};
     #index index.html
 
@@ -11,4 +10,12 @@ server {
     location / {
             try_files $uri $uri/ =404;
     }
+
+    # listen 80 default_server;
+    # listen [::]:80 default_server;
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/{{ environment_dns }}/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/{{ environment_dns }}/privkey.pem; # managed by Certbot
 }

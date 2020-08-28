@@ -1,0 +1,22 @@
+---
+- name: Check if certificate already exists.
+  stat:
+    path: /etc/letsencrypt/live/{{ cert_item.domains | first | replace('*.', '') }}/cert.pem
+  register: letsencrypt_cert
+
+#- name: Stop Nginx service
+#  service:
+#    name: nginx
+#    state: stopped
+#  when: not letsencrypt_cert.stat.exists
+
+- name: Generate new certificate if one doesn't exist.
+  command: "{{ certbot_create_command }}"
+  when: not letsencrypt_cert.stat.exists
+  become_user: root
+
+#- name: Start services after cert has been generated.
+#  service:
+#    name: nginx
+#    state: started
+#  when: not letsencrypt_cert.stat.exists

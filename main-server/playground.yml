@@ -1,0 +1,17 @@
+---
+- hosts: all
+  name: Main playbook
+  become: true
+  become_method: sudo
+  roles:
+    - cert-management-role
+  vars:
+    nginx_app_name: nginx-1-take
+    environment_dns: your.dns.name.com
+    certbot_admin_email: your_email.com
+  tasks:
+    - import_tasks: common-apt/apt-init-packages.yml
+    - import_tasks: common-apt/apt-docker.yml
+    - import_tasks: nginx/nginx.yml
+  handlers:
+    - import_tasks: handlers/nginx-restart.yml
