@@ -1,4 +1,4 @@
 ---
 - name: Install Certbot.
-  package: "name=certbot state=present"
+  apt: name=certbot state=present update_cache=yes
 
